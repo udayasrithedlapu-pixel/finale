@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Fingerprint Security Dashboard</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f6f9;
+      margin: 0;
+    }
+    header {
+      background: #1e3a8a;
+      color: white;
+      padding: 15px;
+      text-align: center;
+    }
+    .container {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 20px;
+      padding: 20px;
+    }
+    .card {
+      background: white;
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+    h2 {
+      color: #1e293b;
+    }
+    button {
+      margin-top: 15px;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      background: #1e3a8a;
+      color: white;
+    }
+    button:hover {
+      background: #162e6d;
+    }
+    .status {
+      margin-top: 20px;
+      font-weight: bold;
+      padding: 10px;
+      border-radius: 8px;
+    }
+    .success {
+      background: #bbf7d0;
+      color: #166534;
+    }
+    .alert {
+      background: #fecaca;
+      color: #991b1b;
+      animation: blink 1s infinite;
+    }
+    @keyframes blink {
+      50% { opacity: 0.5; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>🔒 Fingerprint Security Dashboard</h1>
+    <p>Authentication System for Gates, Doors, and Lockers</p>
+  </header>
+
+  <div class="container">
+    <div class="card" id="gate">
+      <h2>Gate</h2>
+      <button onclick="scanFingerprint('Gate')">Scan Fingerprint</button>
+      <div class="status" id="status-Gate"></div>
+    </div>
+    <div class="card" id="door">
+      <h2>Door</h2>
+      <button onclick="scanFingerprint('Door')">Scan Fingerprint</button>
+      <div class="status" id="status-Door"></div>
+    </div>
+    <div class="card" id="locker">
+      <h2>Locker</h2>
+      <button onclick="scanFingerprint('Locker')">Scan Fingerprint</button>
+      <div class="status" id="status-Locker"></div>
+    </div>
+  </div>
+
+  <script>
+    // Mock database of known fingerprints
+    const knownFingerprints = ["user123", "admin001", "staff007"];
+
+    // Simulated fingerprint scanner
+    function scanFingerprint(location) {
+      // Simulate a scanned fingerprint (in real systems this comes from hardware)
+      const simulatedScan = prompt(`Place finger on ${location} scanner:\n(Example: user123)`);
+
+      const statusElement = document.getElementById(`status-${location}`);
+      statusElement.innerHTML = ""; // clear previous
+
+      if (!simulatedScan) {
+        statusElement.innerHTML = "No fingerprint detected.";
+        statusElement.className = "status alert";
+        return;
+      }
+
+      if (knownFingerprints.includes(simulatedScan.trim())) {
+        statusElement.innerHTML = "✅ Access Granted";
+        statusElement.className = "status success";
+      } else {
+        statusElement.innerHTML = "🚨 HIGH ALERT: Unknown Fingerprint!";
+        statusElement.className = "status alert";
+      }
+    }
+  </script>
+</body>
+</html>
